@@ -1,0 +1,48 @@
+user->browser: Visit URL
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/spa
+server-->browser: HTML-code
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/spa.js
+server-->browser: spa.js
+
+note over browser:
+browser starts executing js-code
+that requests JSON data from server 
+end note
+
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
+server-->browser: [{ content: "HTML is easy", date: "2019-05-23" }, ...]
+
+note over browser:
+browser executes the event handler
+that renders notes to display
+end note
+
+user->browser: Enter Note in input Box
+note over user:
+Click on save button
+submit request to browser
+end note
+
+browser->server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+
+note right of browser
+Request type is application/json
+POST request data sent with request
+{content: "Trying to learn MERN stack", date: "2019-09-01T07:30:48.519Z"}
+end note
+
+note over server:
+Store the recieved data
+end note
+
+server-->browser: 201 Created
+
+note over browser:
+update the notes list
+show the modified list to the user
+end note
+
+
+
