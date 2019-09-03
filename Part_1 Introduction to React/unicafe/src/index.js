@@ -6,7 +6,12 @@ const Button = ({onClick, text}) => {
 }
 
 const Statistic = ({text, value}) => {
-    return <p>{text}: {value}</p>
+    return (
+        <>
+            <td>{text}</td>
+            <td>{value}</td>
+        </>
+    )
 }
 
 const Statistics = ({good, neutral, bad}) => {
@@ -16,17 +21,17 @@ const Statistics = ({good, neutral, bad}) => {
 
     if(totalFeedbacks === 0)
     {
-        return <p>No feedback given.</p>
+        return <tr><td>No feedback given.</td></tr>
     }
     return (
-        <div>
-            <Statistic text="Good" value={good} />
-            <Statistic text="Neutral" value={neutral} />
-            <Statistic text="Bad" value={bad} />
-            <Statistic text="Total" value={totalFeedbacks} />
-            <Statistic text="Average" value={average.toFixed(2)} />
-            <Statistic text="Positive" value={positivePercent.toFixed(2) + '%'} />
-        </div>
+        <>
+            <tr><Statistic text="Good" value={good} /></tr>
+            <tr><Statistic text="Neutral" value={neutral} /></tr>
+            <tr><Statistic text="Bad" value={bad} /></tr>
+            <tr><Statistic text="Total" value={totalFeedbacks} /></tr>
+            <tr><Statistic text="Average" value={average.toFixed(2)} /></tr>
+            <tr><Statistic text="Positive" value={positivePercent.toFixed(2) + '%'} /></tr>
+        </>
     )
 }
 
@@ -46,8 +51,14 @@ const App = () => {
                 <Button onClick={() => setBad(bad + 1)} text="Bad" />
             </div>
             <div>
-                <h2>Statistics</h2>
-                <Statistics good={good} neutral={neutral} bad={bad} />
+                <table>
+                    <thead>
+                        <tr><th colSpan='2'><h2>Statistics</h2></th></tr>
+                    </thead>
+                    <tbody>
+                        <Statistics good={good} neutral={neutral} bad={bad} />
+                    </tbody>
+                </table>
             </div>
         </div>
     )
