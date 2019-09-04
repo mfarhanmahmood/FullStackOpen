@@ -1,24 +1,6 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Button = ({onClick, text}) => {
-    return (
-        <button onClick={onClick}>{text}</button>
-    )
-}
-
-const App = (props) => {
-    const [selected, setSelected] = useState(0)
-    const changeQuote = (anecdotes) => setSelected(Math.round((Math.random() * 10) % anecdotes.length))
-
-    return (
-        <div>
-            <p>{props.anecdotes[selected]}</p>
-            <Button onClick={() => changeQuote(anecdotes)} text="Next Quote" />
-        </div>
-    )
-}
-
 const anecdotes = [
     'If it hurts, do it more often',
     'Adding manpower to a late software project makes it later!',
@@ -27,6 +9,51 @@ const anecdotes = [
     'Premature optimization is the root of all evil.',
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
+
+const Button = ({onClick, text}) => {
+    return (
+        <button onClick={onClick}>{text}</button>
+    )
+}
+
+const DisplayVote = ({count}) => {
+    return (
+        <p>has {count} votes</p>
+    )
+}
+
+const App = (props) => {
+    const [selected, setSelected] = useState(0)
+
+    // Create a votes array equal to the lenght of anecdotes array initialized to 0
+    const [votes, setVote] = useState(() => {
+        const arr = Array(anecdotes.length).fill(0)
+        return arr    
+    })
+
+    const changeQuote = () => {
+        const newQuoteID = Math.trunc((Math.random() * 10) % (anecdotes.length - 1))
+        setSelected(newQuoteID)
+    }
+
+    const addVote = () => {
+        const arr = {...votes}
+        arr[selected]++
+        setVote(arr)
+    }
+
+    return (
+        <div>
+            <p>{props.anecdotes[selected]}</p>
+            <DisplayVote count={votes[selected]} />
+            <div>
+                <Button onClick={addVote} text="Vote" />
+                <Button onClick={changeQuote} text="Next Quote" />
+            </div>
+
+        </div>
+    )
+}
 
 ReactDOM.render(
     <App anecdotes={anecdotes} />,
