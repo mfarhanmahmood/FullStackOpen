@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import AddRecord from './Components/AddRecord'
 import Records from './Components/Records'
+import Filter from './Components/Filter'
 
 const App = () => {
     const [persons, setPersons] = useState([
@@ -11,10 +12,25 @@ const App = () => {
     ])
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
+    const [filterTerm, setFilterTerm] = useState('')
+    
+    const filteredRecords = persons.filter(
+        (person) => {
+            if(filterTerm === '')
+            {
+                return person
+            }
+            const lowerCaseName = person.name.toLocaleLowerCase()
+            return lowerCaseName.includes(filterTerm.toLocaleLowerCase())
+        }
+        )
 
     return (
         <div>
-            <h2>Phonebook</h2>
+            <h1>Phonebook</h1>
+            <Filter
+                setFilterTerm={setFilterTerm} 
+            />
             <AddRecord 
                 newName={newName}
                 setNewName={setNewName}
@@ -23,8 +39,7 @@ const App = () => {
                 persons={persons}
                 setPersons={setPersons}
             />
-            <h2>Numbers</h2>
-            <Records persons={persons} />
+            <Records persons={filteredRecords} />
         </div>
     )
 }

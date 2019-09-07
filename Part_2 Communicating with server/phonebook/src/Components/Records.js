@@ -9,6 +9,7 @@ const Record = ({person}) => {
 const Records = ({persons}) => {
     return (
         <div>
+            <h2>Numbers</h2>
             { persons.map((person) => <Record key={person.name} person={person} />) }
         </div>
     )

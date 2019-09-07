@@ -44,27 +44,30 @@ const AddRecord = (
 
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Name: </label>
-                <input
-                    name="name"
-                    onChange={handleNameOnChange}
-                    placeholder="Enter a new name"
-                />
-            </div>
-            <div>
-                <label>Number: </label>
-                <input
-                    name="number"
-                    onChange={handleNumberOnChange}
-                    placeholder="Enter a new number"
-                />
-            </div>
-            <div>
-                <button type="submit">add</button>
-            </div>
-        </form>
+        <div>
+            <h2>Add a new</h2>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>Name: </label>
+                    <input
+                        name="name"
+                        onChange={handleNameOnChange}
+                        placeholder="Enter a new name"
+                    />
+                </div>
+                <div>
+                    <label>Number: </label>
+                    <input
+                        name="number"
+                        onChange={handleNumberOnChange}
+                        placeholder="Enter a new number"
+                    />
+                </div>
+                <div>
+                    <button type="submit">add</button>
+                </div>
+            </form>
+        </div>
     )
 }
 
