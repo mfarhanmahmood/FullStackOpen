@@ -1,4 +1,6 @@
 import React, {useState} from 'react'
+import AddNumber from './Components/AddNumber'
+import Records from './Components/Records'
 
 const App = () => {
     const [persons, setPersons] = useState([
@@ -9,18 +11,14 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
-            <form>
-                <div>
-                    name: <input />
-                </div>
-                <div>
-                    <button type="submit">add</button>
-                </div>
-            </form>
+            <AddNumber 
+                newName={newName}
+                setNewName={setNewName}
+                persons={persons}
+                setPersons={setPersons}
+            />
             <h2>Numbers</h2>
-            <div>
-                {persons.map((person)=> <p key={person.name}>{person.name}</p>)}
-            </div>
+            <Records persons={persons} />
         </div>
     )
 }
