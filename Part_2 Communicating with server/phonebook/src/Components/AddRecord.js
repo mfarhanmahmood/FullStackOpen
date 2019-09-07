@@ -1,6 +1,8 @@
 import React from 'react'
 
-const AddNumber = ({newName, setNewName, persons, setPersons}) => {
+const AddRecord = (
+        {newName, setNewName, newNumber, setNewNumber, persons, setPersons}
+    ) => {
 
     const verifyName = () => {
         return persons.every(person => {
@@ -12,16 +14,19 @@ const AddNumber = ({newName, setNewName, persons, setPersons}) => {
         });
     }
 
-    const handleOnChange = (event) => {
+    const handleNameOnChange = (event) => {
         setNewName(event.target.value)
-        console.log(event.target.value)
+    }
+    const handleNumberOnChange = (event) => {
+        setNewNumber(event.target.value)
     }
 
     const handleSubmit = (event) => {
         event.preventDefault()
 
         const newRecord = {
-            name: newName
+            name: newName,
+            number: newNumber
         }
 
         if (!verifyName())
@@ -32,8 +37,9 @@ const AddNumber = ({newName, setNewName, persons, setPersons}) => {
         setPersons(persons.concat(newRecord))
 
         event.target.name.value = ''
+        event.target.number.value = ''
         setNewName('')
-        console.log('Handle Submite function completed')
+        setNewNumber('')
     }
 
 
@@ -43,8 +49,16 @@ const AddNumber = ({newName, setNewName, persons, setPersons}) => {
                 <label>Name: </label>
                 <input
                     name="name"
-                    onChange={handleOnChange}
+                    onChange={handleNameOnChange}
                     placeholder="Enter a new name"
+                />
+            </div>
+            <div>
+                <label>Number: </label>
+                <input
+                    name="number"
+                    onChange={handleNumberOnChange}
+                    placeholder="Enter a new number"
                 />
             </div>
             <div>
@@ -54,4 +68,4 @@ const AddNumber = ({newName, setNewName, persons, setPersons}) => {
     )
 }
 
-export default AddNumber
+export default AddRecord
