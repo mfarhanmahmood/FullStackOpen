@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
+import Filter from './Components/Filter'
 
 const App = () => {
   const [countries, setCountries] = useState([])
+  const [filterTerm, setFilterTerm] = useState('')
 
   useEffect(() => {
     axios
@@ -12,11 +14,6 @@ const App = () => {
       })
   }, [])
 
-
-
-
-
-
   //Add other states and function etc. above this line
   if (countries === undefined || countries.length < 1)
   {
@@ -25,7 +22,11 @@ const App = () => {
   return (
     // Add Components and elements inside the empty element
     <>
-      <p>Hello! {countries[0].name}</p>
+      <Filter 
+        filterTerm={filterTerm}
+        setFilterTerm={setFilterTerm}
+        countries={countries}
+      />
     </>
   )
 }
