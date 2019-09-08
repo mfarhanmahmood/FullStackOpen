@@ -9,7 +9,11 @@ const CountriesList = ({ countries }) => {
     }
     return (
         countries.map(country => {
-            return <Country country={country} showFull={false} />
+            return (
+                <div>
+                    <Country country={country} showFull={false} />
+                </div>
+            )
         })
 
     )

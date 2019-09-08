@@ -1,6 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 const Country = ({country, showFull}) => {
+    const [expand, setExpand] = useState(false)
+
+    const expandCountry = () => {
+        setExpand(!expand)
+        
+    }
+
+    const showCollapseButton = () => {
+        if(expand){
+            return <button onClick={expandCountry}>Collapse</button>
+        }
+    }
 
     const showLanguage = () => {
         return (
@@ -11,10 +23,11 @@ const Country = ({country, showFull}) => {
     }
 
 
-    if(!showFull) {
+    if(!showFull && !expand) {
         return (
             <>
-                <span key={country.name}>{country.name}</span>
+                <span key={country.name}>{country.name} </span>
+                <button onClick={expandCountry} >show</button>
                 <br />
             </>
         )
@@ -43,6 +56,7 @@ const Country = ({country, showFull}) => {
                     style={{border: '1px solid black'}}
                 />
             </div>
+            {showCollapseButton()}
         </div>
     )
 }
