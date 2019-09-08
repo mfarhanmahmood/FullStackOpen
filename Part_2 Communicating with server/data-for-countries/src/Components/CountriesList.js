@@ -4,18 +4,13 @@ import Country from './Country'
 const CountriesList = ({ countries }) => {
     if(countries.length === 1)
     {
-        return <Country country={countries[0]} showFull={true}/>
+        return <Country key={countries[0].name} country={countries[0]} showFull={true}/>
         
     }
     return (
         countries.map(country => {
-            return (
-                <div>
-                    <Country country={country} showFull={false} />
-                </div>
-            )
+            return <Country key={country.name} country={country} showFull={false} />
         })
-
     )
 }
 
