@@ -3,12 +3,14 @@ import phonebookService from './services/persons'
 import AddRecord from './Components/AddRecord'
 import Records from './Components/Records'
 import Filter from './Components/Filter'
+import Notification from './Components/Notification'
 
 const App = () => {
     const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [filterTerm, setFilterTerm] = useState('')
+    const [notification, setNotification] = useState({ content: null, type: 'info' })
 
     useEffect(() => {
         phonebookService
@@ -37,13 +39,19 @@ const App = () => {
             .then(response => {
                 if(response === 200)
                 {
-                    alert(`The entry has been deleted successfully!`)
+                    setNotification({
+                        content: `The entry has been deleted!`,
+                        type: 'info'
+                    })
                 }
             })
             .catch(error => {
                 const errorCode = error.response.status
                 if(errorCode === 404) {
-                    alert(`This record is not in phonebook or has already been delted`)
+                    setNotification({
+                        content: `This record is not in phonebook or has already been deleted`,
+                        type: 'danger'
+                    })
                 }
             })
         setPersons(persons.filter(person => person.id !== id))
@@ -55,7 +63,19 @@ const App = () => {
             .updateRecord(recordToUpdate)
             .then(response => {
                 if(response.status === 200) {
-                    alert('Record has been updated successfully!')
+                   setNotification({
+                       content: 'Record has been updated successfully!',
+                       type: 'success'
+                   })
+                }
+            })
+            .catch(error => {
+                const errorCode = error.response.status
+                if (errorCode === 404) {
+                    setNotification({
+                        content: `This record is not in phonebook or has already been delted`,
+                        type: 'danger'
+                    })
                 }
             })
         setPersons(persons.map(p => p.id !== recordToUpdate.id ? p : recordToUpdate))
@@ -64,6 +84,10 @@ const App = () => {
     return (
         <div>
             <h1>Phonebook</h1>
+            <Notification 
+                notification={notification}
+                setNotification={setNotification}
+            />
             <Filter
                 setFilterTerm={setFilterTerm} 
             />
@@ -75,6 +99,7 @@ const App = () => {
                 persons={persons}
                 setPersons={setPersons}
                 updateRecord={updateRecord}
+                setNotification={setNotification}
             />
             <Records 
                 persons={filteredRecords} 

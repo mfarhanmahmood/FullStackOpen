@@ -7,7 +7,8 @@ const AddRecord = (
             newName, setNewName, 
             newNumber, setNewNumber, 
             persons, setPersons,
-            updateRecord
+            updateRecord,
+            setNotification
         }) => {
 
     const verifyName = () => {
@@ -56,6 +57,10 @@ const AddRecord = (
                 .addRecord(newRecord)
                 .then(returnedRecord => {
                     setPersons(persons.concat(returnedRecord))
+                    setNotification({
+                        content: 'Record added successfully!',
+                        type: 'success'
+                    })
                 })
         }
         event.target.name.value = ''
