@@ -1,5 +1,5 @@
 import React from 'react'
-import phonebookService from '.././services/persons'
+import phonebookService from '../services/persons'
 
 
 const AddRecord = (

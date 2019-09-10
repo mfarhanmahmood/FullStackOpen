@@ -28,7 +28,27 @@ const App = () => {
             const lowerCaseName = person.name.toLocaleLowerCase()
             return lowerCaseName.includes(filterTerm.toLocaleLowerCase())
         }
-        )
+    )
+
+
+    const deleteRecord = id => {
+        phonebookService
+            .deleteRecord(id)
+            .then(response => {
+                if(response === 200)
+                {
+                    alert(`The entry has been deleted successfully!`)
+                }
+            })
+            .catch(error => {
+                const errorCode = error.response.status
+                if(errorCode === 404) {
+                    alert(`This record is not in phonebook or has already been delted`)
+                }
+            })
+        setPersons(persons.filter(person => person.id !== id))
+        
+    }
 
     return (
         <div>
@@ -44,7 +64,10 @@ const App = () => {
                 persons={persons}
                 setPersons={setPersons}
             />
-            <Records persons={filteredRecords} />
+            <Records 
+                persons={filteredRecords} 
+                deleteRecord={deleteRecord}
+            />
         </div>
     )
 }
