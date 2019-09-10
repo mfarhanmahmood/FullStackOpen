@@ -50,6 +50,17 @@ const App = () => {
         
     }
 
+    const updateRecord = recordToUpdate => {
+        phonebookService
+            .updateRecord(recordToUpdate)
+            .then(response => {
+                if(response.status === 200) {
+                    alert('Record has been updated successfully!')
+                }
+            })
+        setPersons(persons.map(p => p.id !== recordToUpdate.id ? p : recordToUpdate))
+    }
+
     return (
         <div>
             <h1>Phonebook</h1>
@@ -63,6 +74,7 @@ const App = () => {
                 setNewNumber={setNewNumber}
                 persons={persons}
                 setPersons={setPersons}
+                updateRecord={updateRecord}
             />
             <Records 
                 persons={filteredRecords} 

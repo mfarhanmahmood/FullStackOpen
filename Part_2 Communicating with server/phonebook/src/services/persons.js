@@ -16,9 +16,14 @@ const deleteRecord = id => {
     return request.then(response => response.status)
 }
 
+const updateRecord = (newRecord) => {
+    const request = axios.put(`${baseUrl}/${newRecord.id}`, newRecord)
+    return request.then(response => response.data)
+}
 
 export default {
     getAll,
     addRecord,
-    deleteRecord
+    deleteRecord,
+    updateRecord
 }

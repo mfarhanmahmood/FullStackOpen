@@ -3,8 +3,12 @@ import phonebookService from '../services/persons'
 
 
 const AddRecord = (
-        {newName, setNewName, newNumber, setNewNumber, persons, setPersons}
-    ) => {
+        {
+            newName, setNewName, 
+            newNumber, setNewNumber, 
+            persons, setPersons,
+            updateRecord
+        }) => {
 
     const verifyName = () => {
         return persons.every(person => {
@@ -33,15 +37,27 @@ const AddRecord = (
 
         if (!verifyName())
         {
-            alert(`${newName} is already added in the phonebook!`)
-            return
-        }
+            const changeNumber = window.confirm(
+                `${newName} is already in the phonebook, replace the old one with a new one?`
+            )
 
-        phonebookService
-            .addRecord(newRecord)
-            .then(returnedRecord => {
-                setPersons(persons.concat(returnedRecord))
-            })
+            if (changeNumber)
+            {
+                const changedRecord = { 
+                    ...persons.find(p => p.name === newName), 
+                    number: newNumber
+                }
+                updateRecord(changedRecord)
+            }
+        }
+        else {
+
+            phonebookService
+                .addRecord(newRecord)
+                .then(returnedRecord => {
+                    setPersons(persons.concat(returnedRecord))
+                })
+        }
         event.target.name.value = ''
         event.target.number.value = ''
         setNewName('')
