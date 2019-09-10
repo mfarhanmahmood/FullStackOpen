@@ -1,4 +1,6 @@
 import React from 'react'
+import phonebookService from '.././services/persons'
+
 
 const AddRecord = (
         {newName, setNewName, newNumber, setNewNumber, persons, setPersons}
@@ -34,8 +36,12 @@ const AddRecord = (
             alert(`${newName} is already added in the phonebook!`)
             return
         }
-        setPersons(persons.concat(newRecord))
 
+        phonebookService
+            .addRecord(newRecord)
+            .then(returnedRecord => {
+                setPersons(persons.concat(returnedRecord))
+            })
         event.target.name.value = ''
         event.target.number.value = ''
         setNewName('')
